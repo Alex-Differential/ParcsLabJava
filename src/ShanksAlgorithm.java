@@ -55,9 +55,9 @@ public class ShanksAlgorithm implements AM{
             {
                 solutionX = x.add(mp.get(gamma.multiply(b).mod(n)));
             }
-            j.add(BigInteger.valueOf(1));
+            j = j.add(BigInteger.valueOf(1));
         }
-
+        System.out.println(j);
         // Returning results
         if(solutionX != null)
         {

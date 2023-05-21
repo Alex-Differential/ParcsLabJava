@@ -60,10 +60,10 @@ public class Solver implements AM
         }
         else
         {
-            System.out.println("" + la + " ^ " + res + " = " + lb + " (mod " + lp + ")");
+            System.out.println("" + la + " ^ " + res + " = " + lb + " (mod " + ln + ")");
             System.out.println("x = " + res);
         }
-        System.out.println("Working time on" + lp + "processes: " + ((tEnd - tStart) / 1000000) + "ms");
+        System.out.println("Working time on " + lp + " processes: " + ((tEnd - tStart) / 1000000) + "ms");
     }
 
     static public long solve(AMInfo info, long lpThread, long la, long lb, long ln)
@@ -83,7 +83,6 @@ public class Solver implements AM
 
             left.add(tl);
             right.add(tr);
-            System.out.println("+1");
         }
 
         List <point> points = new ArrayList<point>();
