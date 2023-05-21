@@ -72,14 +72,14 @@ public class Solver implements AM
         List<BigInteger> right = new ArrayList<>();
         List<Long> solution = new ArrayList<>();
 
-        BigInteger nThreads = BigInteger.valueOf(lpThread);
+        int nThreads = (int) lpThread;
         BigInteger n = BigInteger.valueOf(ln);
         // Dividing the line of mod to intervals
         System.out.println("Before cycle");
-        for(BigInteger i = BigInteger.valueOf(0); i.compareTo(nThreads) == -1; i = i.add(BigInteger.valueOf(1)))
+        for(int i = 0; i < nThreads; i++)
         {
-            BigInteger tl = n.multiply(i).divide(nThreads);
-            BigInteger tr = n.multiply(i.add(BigInteger.valueOf(1))).divide(nThreads).subtract(BigInteger.valueOf(1));
+            BigInteger tl = n.multiply(BigInteger.valueOf(i)).divide(BigInteger.valueOf(nThreads));
+            BigInteger tr = n.multiply(BigInteger.valueOf(i).add(BigInteger.valueOf(1))).divide(BigInteger.valueOf(nThreads)).subtract(BigInteger.valueOf(1));
 
             left.add(tl);
             right.add(tr);
@@ -88,7 +88,28 @@ public class Solver implements AM
         List <point> points = new ArrayList<point>();
         List <channel> channels = new ArrayList<channel>();
         // Connection to points
-        for(BigInteger i = BigInteger.valueOf(0); i.compareTo(nThreads) == -1; i = i.add(BigInteger.valueOf(2)))
+        for(int i = 0; i < nThreads; i++)
+        {
+            BigInteger tl = n.multiply(BigInteger.valueOf(i)).divide(BigInteger.valueOf(nThreads));
+            BigInteger tr = n.multiply(BigInteger.valueOf(i).add(BigInteger.valueOf(1))).divide(BigInteger.valueOf(nThreads)).subtract(BigInteger.valueOf(1));
+
+            //int intI = i;
+            System.out.println(i);
+            System.out.println("Something unknown2");
+            points.add(info.createPoint());
+            System.out.println(points);
+            channels.add(points.get(i).createChannel());
+            points.get(i).execute("ShanksAlgorithm");
+            channels.get(i).write(la);
+            channels.get(i).write(lb);
+            channels.get(i).write(ln);
+
+            channels.get(i).write(tl.longValue());
+            channels.get(i).write(tr.longValue());
+        }
+
+        /*
+        * for(int i = 0; i.compareTo(nThreads) == -1; i++)
         {
             BigInteger tl = n.multiply(i).divide(nThreads);
             BigInteger tr = n.multiply(i.add(BigInteger.valueOf(1))).divide(nThreads).subtract(BigInteger.valueOf(1));
@@ -117,6 +138,9 @@ public class Solver implements AM
             channels.get(1).write(tl.longValue());
             channels.get(1).write(tr.longValue());
         }
+        *
+        * */
+
         // Mapping results
         for(int i = 0; i < lpThread; i++)
         {
