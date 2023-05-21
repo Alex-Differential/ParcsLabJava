@@ -97,7 +97,17 @@ public class Solver implements AM
             System.out.println(intI);
             System.out.println("Something unknown2");
             points.add(info.createPoint());
+            points.add(info.createPoint());
             System.out.println(points);
+            channels.add(points.get(0).createChannel());
+            points.get(0).execute("ShanksAlgorithm");
+            channels.get(0).write(la);
+            channels.get(0).write(lb);
+            channels.get(0).write(ln);
+
+            channels.get(0).write(tl.longValue());
+            channels.get(0).write(tr.longValue());
+
             channels.add(points.get(1).createChannel());
             points.get(1).execute("ShanksAlgorithm");
             channels.get(1).write(la);
