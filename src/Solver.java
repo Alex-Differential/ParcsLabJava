@@ -49,7 +49,7 @@ public class Solver implements AM
         System.out.println("n = " + ln);
         // Time counting
         long tStart = System.nanoTime();
-
+        System.out.println(tStart);
         long res = solve(info, lp, la, lb, ln);
 
         long tEnd = System.nanoTime();
@@ -75,6 +75,7 @@ public class Solver implements AM
         BigInteger nThreads = BigInteger.valueOf(lpThread);
         BigInteger n = BigInteger.valueOf(ln);
         // Dividing the line of mod to intervals
+        System.out.println("Before cycle");
         for(BigInteger i = BigInteger.valueOf(0); i.compareTo(nThreads) == -1; i = i.add(BigInteger.valueOf(1)))
         {
             BigInteger tl = n.multiply(i).divide(nThreads);
@@ -82,6 +83,7 @@ public class Solver implements AM
 
             left.add(tl);
             right.add(tr);
+            System.out.println("+1");
         }
 
         List <point> points = new ArrayList<point>();
@@ -89,6 +91,7 @@ public class Solver implements AM
         // Connection to points
         for(BigInteger i = BigInteger.valueOf(0); i.compareTo(nThreads) == -1; i = i.add(BigInteger.valueOf(1)))
         {
+            System.out.println("Something unknown");
             BigInteger tl = n.multiply(i).divide(nThreads);
             BigInteger tr = n.multiply(i.add(BigInteger.valueOf(1))).divide(nThreads).subtract(BigInteger.valueOf(1));
 
