@@ -98,14 +98,14 @@ public class Solver implements AM
             System.out.println("Something unknown2");
             points.add(info.createPoint());
             System.out.println(points);
-            channels.add(points.get(intI).createChannel());
-            points.get(intI).execute("ShanksAlgorithm");
-            channels.get(intI).write(la);
-            channels.get(intI).write(lb);
-            channels.get(intI).write(ln);
+            channels.add(points.get(1).createChannel());
+            points.get(1).execute("ShanksAlgorithm");
+            channels.get(1).write(la);
+            channels.get(1).write(lb);
+            channels.get(1).write(ln);
 
-            channels.get(intI).write(tl.longValue());
-            channels.get(intI).write(tr.longValue());
+            channels.get(1).write(tl.longValue());
+            channels.get(1).write(tr.longValue());
         }
         // Mapping results
         for(int i = 0; i < lpThread; i++)
