@@ -91,7 +91,6 @@ public class Solver implements AM
         // Connection to points
         for(BigInteger i = BigInteger.valueOf(0); i.compareTo(nThreads) == -1; i = i.add(BigInteger.valueOf(1)))
         {
-            System.out.println("Something unknown");
             BigInteger tl = n.multiply(i).divide(nThreads);
             BigInteger tr = n.multiply(i.add(BigInteger.valueOf(1))).divide(nThreads).subtract(BigInteger.valueOf(1));
 
@@ -101,9 +100,7 @@ public class Solver implements AM
             points.add(info.createPoint());
             System.out.println(points);
             channels.add(points.get(intI).createChannel());
-            System.out.println("Something unknown3");
             points.get(intI).execute("ShanksAlgorithm");
-            System.out.println("Something unknown_____");
             channels.get(intI).write(la);
             channels.get(intI).write(lb);
             channels.get(intI).write(ln);

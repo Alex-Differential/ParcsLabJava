@@ -7,7 +7,6 @@ public class ShanksAlgorithm implements AM{
     public void run(AMInfo info)
     {
         long la, lb, ln, ll, lr;
-        System.out.println("start");
         // Reading data
         la = info.parent.readLong();
         lb = info.parent.readLong();
@@ -47,6 +46,8 @@ public class ShanksAlgorithm implements AM{
         BigInteger solutionX = null;
         BigInteger step = a.modInverse(n).modPow(m, n);
 
+        BigInteger j  = BigInteger.valueOf(0);
+
         for(x = l, gamma = a.modInverse(n).modPow(l, n); x.compareTo(r) <= 0;
             x = x.add(m), gamma = gamma.multiply(step).mod(n))
         {
@@ -54,10 +55,13 @@ public class ShanksAlgorithm implements AM{
             {
                 solutionX = x.add(mp.get(gamma.multiply(b).mod(n)));
             }
+            j.add(BigInteger.valueOf(1));
         }
+
         // Returning results
         if(solutionX != null)
         {
+            solutionX = solutionX.subtract(j);
             System.out.println("The ShanksAlgorithm class return the result: x = " + solutionX);
             info.parent.write(solutionX.longValue());
         }
