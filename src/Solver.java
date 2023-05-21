@@ -96,12 +96,12 @@ public class Solver implements AM
             BigInteger tr = n.multiply(i.add(BigInteger.valueOf(1))).divide(nThreads).subtract(BigInteger.valueOf(1));
 
             int intI = i.intValue();
-
+            System.out.println("Something unknown2");
             points.add(info.createPoint());
             channels.add(points.get(intI).createChannel());
-
+            System.out.println("Something unknown3");
             points.get(intI).execute("ShanksAlgorithm");
-
+            System.out.println("Something unknown_____");
             channels.get(intI).write(la);
             channels.get(intI).write(lb);
             channels.get(intI).write(ln);
@@ -112,6 +112,7 @@ public class Solver implements AM
         // Mapping results
         for(int i = 0; i < lpThread; i++)
         {
+            System.out.println("perevirka");
             solution.add(channels.get(i).readLong());
         }
         // Finding the solution
