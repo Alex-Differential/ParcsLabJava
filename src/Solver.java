@@ -88,7 +88,7 @@ public class Solver implements AM
         List <point> points = new ArrayList<point>();
         List <channel> channels = new ArrayList<channel>();
         // Connection to points
-        for(BigInteger i = BigInteger.valueOf(0); i.compareTo(nThreads) == -1; i = i.add(BigInteger.valueOf(1)))
+        for(BigInteger i = BigInteger.valueOf(0); i.compareTo(nThreads) == -1; i = i.add(BigInteger.valueOf(2)))
         {
             BigInteger tl = n.multiply(i).divide(nThreads);
             BigInteger tr = n.multiply(i.add(BigInteger.valueOf(1))).divide(nThreads).subtract(BigInteger.valueOf(1));
