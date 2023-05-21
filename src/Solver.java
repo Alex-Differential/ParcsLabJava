@@ -29,7 +29,7 @@ public class Solver implements AM
 
         try
         {
-            BufferedReader in = new BufferedReader(new FileReader(info.curtask.findFile("input_1.txt")));
+            BufferedReader in = new BufferedReader(new FileReader(info.curtask.findFile("input.txt")));
 
             lp = Long.parseLong(in.readLine());
             la = Long.parseLong(in.readLine());
@@ -110,7 +110,6 @@ public class Solver implements AM
         // Mapping results
         for(int i = 0; i < lpThread; i++)
         {
-            System.out.println("perevirka");
             solution.add(channels.get(i).readLong());
         }
         // Finding the solution
