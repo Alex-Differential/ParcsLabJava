@@ -7,6 +7,7 @@ public class ShanksAlgorithm implements AM{
     public void run(AMInfo info)
     {
         long la, lb, ln, ll, lr;
+        System.out.println("start");
         // Reading data
         la = info.parent.readLong();
         lb = info.parent.readLong();

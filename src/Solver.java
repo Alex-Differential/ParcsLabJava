@@ -6,124 +6,125 @@ import parcs.*;
 
 public class Solver implements AM
 {
-	
-	public static void main(String[] args)
-	{
-		System.out.print("class Solver start method main\n");
-		
-		task mainTask = new task();
-		 
-		mainTask.addJarFile("Solver.jar");
-		mainTask.addJarFile("BigStepBabyStep.jar");
-		
-		System.out.print("class Solver method main adder jars\n");
-	     
-		(new Solver()).run(new AMInfo(mainTask, (channel)null));
-		
-		System.out.print("class Solver method main finish work\n");
-		
-	    mainTask.end();
-	}
-	
-	public void run(AMInfo info)
-	{		
-		long ln, la, lb, lp;
-		
-		try
-		{
-			BufferedReader in = new BufferedReader(new FileReader(info.curtask.findFile("input.txt")));
-			
-			ln = new Long(in.readLine()).longValue();
-			la = new Long(in.readLine()).longValue();
-			lb = new Long(in.readLine()).longValue();
-			lp = new Long(in.readLine()).longValue();
-		}
-		catch (IOException e)
-		{
-			System.out.print("Error while reading input\n");
-			
-			e.printStackTrace();
-			
-			return;
-		}
-		
-		System.out.print("class Solver method run read data from file\na = " + la + "\nb = " +
-				lb + "\np = " + lp + "\n");
-		
-		long tStart = System.nanoTime();
-		
-		long res = solve(info, ln, la, lb, lp);
-		
-		long tEnd = System.nanoTime();
-		
-		if(res == -1)
-		{
-			System.out.println("No solution for: " + la + " ^ x = " + lb + " (mod " + lp + ")");
-		}
-		else
-		{
-			System.out.println("x = " + res);
-			System.out.println("" + la + " ^ " + res + " = " + lb + " (mod " + lp + ")");
-		}
-		
-		System.out.println("time = " + ((tEnd - tStart) / 1000000) + "ms");
-	}
-	
-	static public long solve(AMInfo info, long lnThread, long la, long lb, long lp)
-	{		
-		List<BigInteger> l = new ArrayList<BigInteger>();
-		List<BigInteger> r = new ArrayList<BigInteger>();
-		List<Long> sol = new ArrayList<Long>();
-		
-		BigInteger nThreads = BigInteger.valueOf(lnThread);
-		BigInteger p = BigInteger.valueOf(lp);
-		
-		for(BigInteger i = BigInteger.valueOf(0); i.compareTo(nThreads) == -1; i = i.add(BigInteger.valueOf(1)))
-		{
-			BigInteger tl = p.multiply(i).divide(nThreads);
-			BigInteger tr = p.multiply(i.add(BigInteger.valueOf(1))).divide(nThreads).subtract(BigInteger.valueOf(1));
-			
-			l.add(tl);
-			r.add(tr);
-		}
-		
-		List <point> points = new ArrayList<point>();
-		List <channel> channels = new ArrayList<channel>();
-		
-		for(BigInteger i = BigInteger.valueOf(0); i.compareTo(nThreads) == -1; i = i.add(BigInteger.valueOf(1)))
-		{
-			BigInteger tl = p.multiply(i).divide(nThreads);
-			BigInteger tr = p.multiply(i.add(BigInteger.valueOf(1))).divide(nThreads).subtract(BigInteger.valueOf(1));
-			
-			int ii = i.intValue();
-			
-			points.add(info.createPoint());
-			channels.add(points.get(ii).createChannel());
-			
-			points.get(ii).execute("BigStepBabyStep");
-		    
-			channels.get(ii).write(la);
-			channels.get(ii).write(lb);
-			channels.get(ii).write(lp);
-			
-			channels.get(ii).write(tl.longValue());
-			channels.get(ii).write(tr.longValue());
-		}
-		
-		for(int i = 0; i < lnThread; i++)
-		{
-			sol.add(channels.get(i).readLong());
-		}
-		
-		long res = -1;
-		for(int i = 0; i < sol.size(); i++)
-		{
-			if(sol.get(i) != -1)
-			{
-				res = sol.get(i).longValue();
-			}
-		}
-		
-		return res;
-	}	
+
+    public static void main(String[] args)
+    {
+        System.out.println("The Solver class start method main");
+
+        task curtask = new task();
+        curtask.addJarFile("Solver.jar");
+        curtask.addJarFile("ShanksAlgorithm.jar");
+
+        System.out.println("The Solver class method main adder jar files");
+
+        (new Solver()).run(new AMInfo(curtask, (channel)null));
+
+        System.out.println("The Solver class method main finish work");
+        curtask.end();
+    }
+
+    public void run(AMInfo info)
+    {
+        long lp, la, lb, ln;
+
+        try
+        {
+            BufferedReader in = new BufferedReader(new FileReader(info.curtask.findFile("input_1.txt")));
+
+            lp = Long.parseLong(in.readLine());
+            la = Long.parseLong(in.readLine());
+            lb = Long.parseLong(in.readLine());
+            ln = Long.parseLong(in.readLine());
+        }
+        catch (IOException e)
+        {
+            System.out.print("Reading input data error\n");
+            e.printStackTrace();
+            return;
+        }
+
+        System.out.println("The Solver class have read data from the parent server");
+        System.out.println("alpha = " + la);
+        System.out.println("beta = " + lb);
+        System.out.println("n = " + ln);
+        // Time counting
+        long tStart = System.nanoTime();
+        System.out.println(tStart);
+        long res = solve(info, lp, la, lb, ln);
+
+        long tEnd = System.nanoTime();
+        // Printing results
+        if(res == -1)
+        {
+            System.out.println("There is no solution for: " + la + " ^ x = " + lb + " (mod " + ln + ")");
+        }
+        else
+        {
+            System.out.println("" + la + " ^ " + res + " = " + lb + " (mod " + lp + ")");
+            System.out.println("x = " + res);
+        }
+        System.out.println("Working time on" + lp + "processes: " + ((tEnd - tStart) / 1000000) + "ms");
+    }
+
+    static public long solve(AMInfo info, long lpThread, long la, long lb, long ln)
+    {
+        List<BigInteger> left = new ArrayList<>();
+        List<BigInteger> right = new ArrayList<>();
+        List<Long> solution = new ArrayList<>();
+
+        BigInteger nThreads = BigInteger.valueOf(lpThread);
+        BigInteger n = BigInteger.valueOf(ln);
+        // Dividing the line of mod to intervals
+        System.out.println("Before cycle");
+        for(BigInteger i = BigInteger.valueOf(0); i.compareTo(nThreads) == -1; i = i.add(BigInteger.valueOf(1)))
+        {
+            BigInteger tl = n.multiply(i).divide(nThreads);
+            BigInteger tr = n.multiply(i.add(BigInteger.valueOf(1))).divide(nThreads).subtract(BigInteger.valueOf(1));
+
+            left.add(tl);
+            right.add(tr);
+            System.out.println("+1");
+        }
+
+        List <point> points = new ArrayList<point>();
+        List <channel> channels = new ArrayList<channel>();
+        // Connection to points
+        for(BigInteger i = BigInteger.valueOf(0); i.compareTo(nThreads) == -1; i = i.add(BigInteger.valueOf(1)))
+        {
+            System.out.println("Something unknown");
+            BigInteger tl = n.multiply(i).divide(nThreads);
+            BigInteger tr = n.multiply(i.add(BigInteger.valueOf(1))).divide(nThreads).subtract(BigInteger.valueOf(1));
+
+            int intI = i.intValue();
+            System.out.println(intI);
+            System.out.println("Something unknown2");
+            points.add(info.createPoint());
+            System.out.println(points);
+            channels.add(points.get(intI).createChannel());
+            System.out.println("Something unknown3");
+            points.get(intI).execute("ShanksAlgorithm");
+            System.out.println("Something unknown_____");
+            channels.get(intI).write(la);
+            channels.get(intI).write(lb);
+            channels.get(intI).write(ln);
+
+            channels.get(intI).write(tl.longValue());
+            channels.get(intI).write(tr.longValue());
+        }
+        // Mapping results
+        for(int i = 0; i < lpThread; i++)
+        {
+            System.out.println("perevirka");
+            solution.add(channels.get(i).readLong());
+        }
+        // Finding the solution
+        long result = -1;
+        for (Long aLong : solution) {
+            if (aLong != -1) {
+                result = aLong;
+            }
+        }
+
+        return result;
+    }
 }
