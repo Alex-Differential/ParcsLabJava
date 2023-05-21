@@ -29,7 +29,7 @@ public class Solver implements AM
 
         try
         {
-            BufferedReader in = new BufferedReader(new FileReader(info.curtask.findFile("input.txt")));
+            BufferedReader in = new BufferedReader(new FileReader(info.curtask.findFile("input_1.txt")));
 
             lp = Long.parseLong(in.readLine());
             la = Long.parseLong(in.readLine());
