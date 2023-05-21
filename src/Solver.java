@@ -96,8 +96,10 @@ public class Solver implements AM
             BigInteger tr = n.multiply(i.add(BigInteger.valueOf(1))).divide(nThreads).subtract(BigInteger.valueOf(1));
 
             int intI = i.intValue();
+            System.out.println(intI);
             System.out.println("Something unknown2");
             points.add(info.createPoint());
+            System.out.println(points);
             channels.add(points.get(intI).createChannel());
             System.out.println("Something unknown3");
             points.get(intI).execute("ShanksAlgorithm");
