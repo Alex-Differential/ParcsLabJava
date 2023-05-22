@@ -51,11 +51,13 @@ public class ShanksAlgorithm implements AM{
         for(x = l, gamma = a.modInverse(n).modPow(l, n); x.compareTo(r) <= 0;
             x = x.add(m), gamma = gamma.multiply(step).mod(n))
         {
+            j = j.add(BigInteger.valueOf(1));
+
             if(mp.containsKey(gamma.multiply(b).mod(n)))
             {
                 solutionX = x.add(mp.get(gamma.multiply(b).mod(n)));
+                break;
             }
-            j = j.add(BigInteger.valueOf(1));
         }
         System.out.println(j);
         // Returning results
