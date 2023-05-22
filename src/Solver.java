@@ -29,7 +29,7 @@ public class Solver implements AM
 
         try
         {
-            BufferedReader in = new BufferedReader(new FileReader(info.curtask.findFile("input.txt")));
+            BufferedReader in = new BufferedReader(new FileReader(info.curtask.findFile("input_0_1.txt")));
 
             lp = Long.parseLong(in.readLine());
             la = Long.parseLong(in.readLine());
@@ -93,9 +93,6 @@ public class Solver implements AM
             BigInteger tl = n.multiply(BigInteger.valueOf(i)).divide(BigInteger.valueOf(nThreads));
             BigInteger tr = n.multiply(BigInteger.valueOf(i).add(BigInteger.valueOf(1))).divide(BigInteger.valueOf(nThreads)).subtract(BigInteger.valueOf(1));
 
-            //int intI = i;
-            System.out.println(i);
-            System.out.println("Something unknown2");
             points.add(info.createPoint());
             System.out.println(points);
             channels.add(points.get(i).createChannel());
