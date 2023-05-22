@@ -25,13 +25,14 @@ public class Solver implements AM
 
     public void run(AMInfo info)
     {
-        long lp, la, lb, ln;
+        long la, lb, ln;
+        int lp;
 
         try
         {
             BufferedReader in = new BufferedReader(new FileReader(info.curtask.findFile("input_0_4.txt")));
 
-            lp = Long.parseLong(in.readLine());
+            lp = Integer.parseInt(in.readLine());
             la = Long.parseLong(in.readLine());
             lb = Long.parseLong(in.readLine());
             ln = Long.parseLong(in.readLine());
@@ -49,7 +50,7 @@ public class Solver implements AM
         System.out.println("n = " + ln);
         // Time counting
         long tStart = System.nanoTime();
-        System.out.println(tStart);
+
         long res = solve(info, lp, la, lb, ln);
 
         long tEnd = System.nanoTime();
@@ -66,16 +67,14 @@ public class Solver implements AM
         System.out.println("Working time on " + lp + " processes: " + ((tEnd - tStart) / 1000000) + "ms");
     }
 
-    static public long solve(AMInfo info, long lpThread, long la, long lb, long ln)
+    static public long solve(AMInfo info, int nThreads, long la, long lb, long ln)
     {
         List<BigInteger> left = new ArrayList<>();
         List<BigInteger> right = new ArrayList<>();
         List<Long> solution = new ArrayList<>();
 
-        int nThreads = (int) lpThread;
         BigInteger n = BigInteger.valueOf(ln);
         // Dividing the line of mod to intervals
-        System.out.println("Before cycle");
         for(int i = 0; i < nThreads; i++)
         {
             BigInteger tl = n.multiply(BigInteger.valueOf(i)).divide(BigInteger.valueOf(nThreads));
@@ -93,6 +92,7 @@ public class Solver implements AM
             BigInteger tl = n.multiply(BigInteger.valueOf(i)).divide(BigInteger.valueOf(nThreads));
             BigInteger tr = n.multiply(BigInteger.valueOf(i).add(BigInteger.valueOf(1))).divide(BigInteger.valueOf(nThreads)).subtract(BigInteger.valueOf(1));
 
+            System.out.println(i);
             points.add(info.createPoint());
             System.out.println(points);
             channels.add(points.get(i).createChannel());
@@ -139,7 +139,7 @@ public class Solver implements AM
         * */
 
         // Mapping results
-        for(int i = 0; i < lpThread; i++)
+        for(int i = 0; i < nThreads; i++)
         {
             solution.add(channels.get(i).readLong());
         }
